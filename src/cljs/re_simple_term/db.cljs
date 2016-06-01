@@ -1,4 +1,6 @@
 (ns re-simple-term.db)
 
 (def default-db
-  {:name "re-frame"})
+  {:input-text ""
+   :outputs '() ; new value will be `conj` to this seq (pushed onto front)
+   })
