@@ -35,7 +35,7 @@
      :cljs (cljs.reader/read-string s)
      :clj (read-string s)))
 (defn parse-string [s]
-  (count (rs s)))
+  (:a (rs s)))
 
 ; This is the gateway into your app. In this extremely trivial example,
 ; depending on how many inputs the user has submitted, the output will be either

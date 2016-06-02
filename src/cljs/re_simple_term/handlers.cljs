@@ -19,7 +19,7 @@
     (-> db
         (update-in ,,, [:outputs] conj (awesome/accept-input (:input-text db) db))
         (assoc ,,, :busy? false)
-        (assoc ,,, :input-text ""))))
+        (assoc ,,, :input-text (:input-text db/default-db)))))
 
 (re-frame/register-handler
   :submit-input
