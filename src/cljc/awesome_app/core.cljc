@@ -31,9 +31,9 @@
 
 ; A function might parse your input into a Clojure data structure
 (defn rs [s]
-  #?@(,,,
-       :cljs (cljs.reader/read-string s)
-       :clj (read-string s)))
+  #?(,,,
+      :cljs (cljs.reader/read-string s)
+      :clj (read-string s)))
 (defn parse-string [s]
   (count (rs s)))
 
