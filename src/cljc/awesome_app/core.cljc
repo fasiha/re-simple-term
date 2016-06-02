@@ -17,12 +17,18 @@
         (map (fn [element] [:li element])
              (string/split s ""))))
 
+; A function might take a long time to run...
+(defn cpu-hog-function [s]
+  (str s " - CPU hog result: " (apply + (take 1000000 (range)))))
+
 ; This is the gateway into your app. In this extremely trivial example,
 ; depending on how many inputs the user has submitted, the output will be either
 ; a reversed string or an enumerated list of characters. In this way, your
 ; application can know about the other commands the user has run.
 (defn accept-input [s & [db]]
-  (if (-> db :outputs count odd?)
-    (just-reverse s)
-    (enumerate s)))
+  (condp = (-> db :outputs count (mod 3))
+    0 (just-reverse s)
+    1 (cpu-hog-function s)
+    2 (enumerate s)
+    "luigi gonna win"))
 

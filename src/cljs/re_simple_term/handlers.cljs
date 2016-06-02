@@ -14,8 +14,17 @@
     (assoc db :input-text text)))
 
 (re-frame/register-handler
-  :submit-input
+  :process-input
   (fn [db _]
     (-> db
         (update-in ,,, [:outputs] conj (awesome/accept-input (:input-text db) db))
+        (assoc ,,, :busy? false)
         (assoc ,,, :input-text ""))))
+
+(re-frame/register-handler
+  :submit-input
+  (fn [db _]
+    ; might take a while. See
+    ; https://github.com/Day8/re-frame/wiki/Solve-the-CPU-hog-problem#forcing-a-one-off-render
+    (re-frame/dispatch ^:flush-dom [:process-input])
+    (assoc db :busy? true)))

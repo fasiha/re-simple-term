@@ -1,6 +1,11 @@
 (ns re-simple-term.views
     (:require [re-frame.core :as re-frame]))
 
+(defn busy-panel []
+  (let [busy-sub (re-frame/subscribe [:busy?])]
+    (fn []
+      (if @busy-sub
+        [:div "Busy…"]))))
 (defn output-panel []
   (let [outputs-sub (re-frame/subscribe [:outputs])]
     (fn []
@@ -22,4 +27,4 @@
        [:button {:onClick #(re-frame/dispatch [:submit-input])} "Submit"]])))
 
 (defn main-panel []
-  [:div [input-panel] [output-panel]])
+  [:div [input-panel] [busy-panel] [output-panel]])
