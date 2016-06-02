@@ -20,9 +20,9 @@
 
 ; A function might take a long time to run...
 (defn now []
-  #?(,,,
-       :cljs (.getTime (js/Date.))
-       :clj (java.lang.System/currentTimeMillis)))
+  #?(
+     :cljs (.getTime (js/Date.))
+     :clj (java.lang.System/currentTimeMillis)))
 (defn cpu-hog-function [s]
   (let [start (now)
         res (str s " - CPU hog result: " (apply + (take 1000000 (range))))
@@ -31,9 +31,9 @@
 
 ; A function might parse your input into a Clojure data structure
 (defn rs [s]
-  #?(,,,
-      :cljs (cljs.reader/read-string s)
-      :clj (read-string s)))
+  #?(
+     :cljs (cljs.reader/read-string s)
+     :clj (read-string s)))
 (defn parse-string [s]
   (count (rs s)))
 
