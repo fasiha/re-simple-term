@@ -17,5 +17,5 @@
   :submit-input
   (fn [db _]
     (-> db
-        (update-in ,,, [:outputs] conj (awesome/accept-input (:input-text db)))
+        (update-in ,,, [:outputs] conj (awesome/accept-input (:input-text db) db))
         (assoc ,,, :input-text ""))))

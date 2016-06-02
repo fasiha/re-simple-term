@@ -19,9 +19,10 @@
 
 ; This is the gateway into your app. In this extremely trivial example,
 ; depending on how many inputs the user has submitted, the output will be either
-; a reversed string or an enumerated list of characters.
+; a reversed string or an enumerated list of characters. In this way, your
+; application can know about the other commands the user has run.
 (defn accept-input [s & [db]]
   (if (-> db :outputs count odd?)
     (just-reverse s)
-    (enumerate s))))
+    (enumerate s)))
 
