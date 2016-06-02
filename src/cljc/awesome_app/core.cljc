@@ -1,5 +1,6 @@
 (ns awesome-app.core
-  (:require [clojure.string :as string]))
+  (:require [clojure.string :as string]
+            #?(:cljs [cljs.reader])))
 
 ; Put all your super-awesome library code here. Re-frame will call
 ; `accept-input` with a string from the browser and the re-frame app database,
@@ -21,14 +22,23 @@
 (defn cpu-hog-function [s]
   (str s " - CPU hog result: " (apply + (take 1000000 (range)))))
 
+; A function might parse your input into a Clojure data structure
+(defn rs [s]
+  #?@(,,,
+       :cljs (cljs.reader/read-string s) 
+       :clj (read-string s)))
+(defn parse-string [s]
+  (count (rs s)))
+
 ; This is the gateway into your app. In this extremely trivial example,
 ; depending on how many inputs the user has submitted, the output will be either
 ; a reversed string or an enumerated list of characters. In this way, your
 ; application can know about the other commands the user has run.
 (defn accept-input [s & [db]]
-  (condp = (-> db :outputs count (mod 3))
+  (condp = (-> db :outputs count (mod 4))
     0 (just-reverse s)
     1 (cpu-hog-function s)
     2 (enumerate s)
+    3 (parse-string s)
     "luigi gonna win"))
 
